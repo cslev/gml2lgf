@@ -114,8 +114,12 @@ class Converter:
 
         
         for line in self.f:
-               
+            
             splitted_line = line.split()
+            #check that a line is not an empty line
+            if(len(splitted_line) == 0):
+                #if line was empty, go to the next one
+                continue
             #looking for the first node and its params
             if(splitted_line[0] == "node" and splitted_line[1] == "["):
 #                 self.log('Node element recognized')
