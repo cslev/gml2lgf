@@ -1,0 +1,155 @@
+#:kivy 1.6.0
+# -*- encoding: utf-8 -*-
+#GUI osztaly a python fileban amihez hozzarendelem a kovetkezo grafikus elemeket
+<GUI>:
+
+    
+    #globalis valtozok
+    file_text_input:file_text_input
+    node_param_label: npm
+    #node_param_grid: npg
+    
+    edge_param_label: epm
+    #edge_param_grid: epg
+    params_boxlayout: pb
+    
+    main_boxlayout:mb
+    
+    console_log:cl
+    
+    stack_layout:sl
+    
+    textarea_scrollview:scrlv
+    
+    #buttonok valtozoi
+    button_close:button_close
+    button_convert:button_convert
+    
+    #main layout as a vertical stack
+    BoxLayout: 
+        id: mb
+        orientation: 'vertical'
+        padding: 10
+        #here comes the first line
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height:"30dp"
+            spacing: 10
+            Label:
+                text: 'GML file'
+                size_hint_x: 0.1
+
+            TextInput:
+                id: file_text_input
+                text: 'path to the file...'
+                multiline: False
+                size_hint_x: 0.5
+                
+            Button:
+                id: button_open
+                text: 'Open...'
+                size_hint_x: 0.2
+                on_press: root.show_load()
+            Button:
+                id: button_analyze
+                text: 'Analyze'
+                size_hint_x: 0.2
+                on_press: root.analyze()
+            
+        #here comes the found params list
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height:"20dp"
+            
+            
+            #node params label
+            Label:
+                id:npm
+                text: 'Click Analyze FIRST'
+                halign: 'left'
+            Label:
+                id:epm
+                text: 'Click Analyze FIRST'
+                halign: 'left'
+            
+        
+        BoxLayout:
+            id: pb
+            orientation: 'horizontal'
+            size_hint_x:0.9
+            #size_hint_y: 0.5
+            
+            
+        
+       
+        #here comes the console log
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y: None
+            height: "30dp"
+            Label:
+                text: 'Console log'
+                halign: 'right'
+                size_hint_x: None
+        ScrollView:
+            id: scrlv
+            TextInput:
+                text: 'This is the console log\n'
+                line_height: "30dp"
+                size_hint: 1, None
+                height: max( (len(self._lines)+1) * self.line_height, scrlv.height)
+                id: cl
+                multiline:True
+                readonly: True
+                   
+            #TextInput:
+            #    line_height: "30dp"
+            #    id: cl
+            #    text: ''
+            #    multiline: True
+            #    readonly: True
+            
+        #buttons
+        StackLayout:
+            id:sl
+            orientation: 'tb-rl'
+            size_hint_y: None
+            height:"30dp"
+            spacing: 10
+            
+            Button:
+                text: 'Close'
+                id: button_close
+                size_hint_x: 0.1
+                on_press: root.close()
+
+            Button:
+                id: button_convert
+                text: 'Convert!'
+                size_hint_x: 0.1
+                on_press: root.convert()
+    
+
+#this style specifies the loadDialog properties    
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            filters: ['*.gml']
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+                
