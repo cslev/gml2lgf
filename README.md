@@ -6,7 +6,7 @@ GML2LGF converter converts traditional GML files into Lemon Graph Format that ca
 The project's homepage is available under:
 
 
-[csikor.tmit.bme.hu/GML2LGF](http://csikor.tmit.bme.hu/GML2LGF)
+[http://csikor.tmit.bme.hu/GML2LGF](http://csikor.tmit.bme.hu/GML2LGF)
 
 
-[lendulet.tmit.bme.hu/GML2LGF](http://lendulet.tmit.bme.hu/GML2LGF/)
+[http://lendulet.tmit.bme.hu/GML2LGF](http://lendulet.tmit.bme.hu/GML2LGF/)
