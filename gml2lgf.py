@@ -49,7 +49,7 @@ class LoadDialog(FloatLayout):
 
 
 class GUI(BoxLayout):
-    
+    """This class is devoted to create GUI and handle the actions"""
 
     
     #variable for converter class
@@ -128,25 +128,25 @@ class GUI(BoxLayout):
         
     
     def dismiss_popup(self):
-        '''
+        """
         This dismisses popups
-        '''
+        """
         self._popup.dismiss()
     
     
     def show_load(self):
-        '''
+        """
         show load file dialog
-        '''
+        """
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
         self._popup = Popup(title="Load file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
     
     
     def load(self, path, filename):
-        '''
+        """
         this will load the file and dismiss the dialog
-        '''
+        """
 
         try:
             self.selected_file = filename[0]
@@ -178,7 +178,7 @@ class GUI(BoxLayout):
          
     def analyze(self):
         '''
-        This is the main process, which analyze the loaded gml file
+        This function analyzes the read gml file
         '''
         self.converter = Converter(self.file_text_input.text)
         self.converter.set_reference(self.console_log)
@@ -355,11 +355,14 @@ class GUI(BoxLayout):
         
         
     def convert(self):
+        """This function checks whether everything was set and read correctly,
+        and then calls Converter class' dedicated functions to write out
+        the new LGF file"""
+        
         #checking that analyze button was pressed and some gml file was already loaded  
         if isinstance(self.converter, Converter):
-            '''
-            OK, we can do convert now, all necessary stuff was created and file was read
-            '''
+            #OK, we can do convert now, all necessary stuff was created and file was read
+            
             status = dict()
             print ("CONVERT")     
             if(self.found_cost_cb.active):
@@ -403,6 +406,7 @@ class GUI(BoxLayout):
             
         
     def show_popup(self,*args):
+        """This functions shows a Kivy Popup window"""
         
         popup = Popup(title=args[0],
                       content=Label(text=args[1]),
@@ -412,21 +416,18 @@ class GUI(BoxLayout):
                       title_size='24sp')
         popup.open()
         
-        
-# def main():
-#     print("Main")
-#     converter = Converter("Bellsouth.gml")
-#     converter.read_file()
-#     print(converter.nodes)
 
     def get_filetext_input(self):
+        """reads the text of the file input text_field"""
         return self.file_txt_input
     
-    #default close event to main window
+    
     def close(self):
+        """Default close event to main window"""
         exit()
    
 class Gml2LgfApp(App):
+    """The main class"""
     title = "GML2LGF converter"
     #this is also important for file chooser dialog
     Factory.register('LoadDialog', cls=LoadDialog)

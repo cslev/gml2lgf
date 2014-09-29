@@ -32,6 +32,7 @@ import re
 #this will be helpful to get the file's basename
 import os.path
 class Converter:
+    """This class is responsible for the main task """
     
     #global error msg
     error_msg = ''
@@ -59,6 +60,9 @@ class Converter:
     #the miscellaneous header part, which is not regarding to the final lgf file
     header = ''
     def __init__(self,file_name):
+        """Constructor - initializing helper variables
+           Variable file_name is the gml file we want to analyze
+        """
 #         print('constructor...param1= {}'.format(file_name))
         self.file_name = file_name
         basename = os.path.basename(self.file_name) 
@@ -79,14 +83,20 @@ class Converter:
         self.error_msg = ''
     
     def set_reference(self,text_area):
+        """This function is devoted to be able to 
+        update/change a text_area in the GUI"""
         self.text_area = text_area
     
     def log(self,txt):
+        """Simple logger function.
+        It uses the text_area variable (reference known 
+        by the previous function"""
         if(self.text_area != None):
             self.text_area.text +=txt + "\n"
        
     def read_file(self):
-        
+        """This function reads the pre-set filename, and 
+        analyzes it at the same time with only one reading"""
         try:
             self.f = open(self.file_name,'r')
             
@@ -154,6 +164,7 @@ class Converter:
                 isEdge = True
                 isNode = False
                 continue
+            #we found an Edge
             elif(isEdge):
                 if(splitted_line[0] != "]"):
 #                     self.log("---edge line ---")
@@ -167,8 +178,7 @@ class Converter:
                     self.edges.append(copy.deepcopy(one_edge))
                     one_edge.clear()
                     
-                continue
-            
+                continue            
              
             else:
                 self.header+=line
@@ -176,9 +186,11 @@ class Converter:
                 
         self.analyze_nodes_and_edges()
         
-    #this function checks that how many different node/edge parameters are present, and its number of occurrence
     def analyze_nodes_and_edges(self):
-        
+        """This function checks that how many different 
+        node/edge parameters are present, and its number
+         of occurrence
+        """
         self.number_of_nodes = len(self.nodes)
         for i in range(self.number_of_nodes):
 #             print(self.nodes[i])
@@ -221,9 +233,9 @@ class Converter:
      
     
     def find_node_with_param(self,param):
-        '''This function will find an example for a particular param
+        """"This function will find an example for a particular param
         It is used to show in the GUI's console that how a property looks like
-        '''
+        """
         retVal = None
         nodes_range = range(len(self.nodes))
         for i in nodes_range:
@@ -237,8 +249,8 @@ class Converter:
             print ("Somehow no example was found with the given param:", param)
 
     def find_edge_with_param(self,param):
-        '''Same as find_node_with_param, but it is used for links
-        '''
+        """Same as find_node_with_param, but it is used for links
+        """
         retVal = None
         nodes_range = range(len(self.edges))
         for i in nodes_range:
@@ -255,12 +267,12 @@ class Converter:
     
            
     def write_out_results(self,link_options, node_params_to_write, edge_params_to_write):
-        '''
+        """
         This method will do actually the THING.
         First it writes out the header of the GML file into a separate nfo file for lemon lgf,
         and then the nodes and edges - according to the settings, given by the user - will be written out in a lemon specific format/
         The lemon file name will be the same as the gml file's name, without .gml
-        '''
+        """
         
         #get the network name from the file's base name
         basename = str(os.path.splitext(os.path.basename(self.file_name))[0])

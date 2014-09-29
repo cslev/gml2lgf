@@ -24,6 +24,7 @@ from converter import Converter
 import sys, getopt
 
 def print_help():
+    """This function prints out how the CLI works"""
     print 'Usage:'
     print 'gml2lgf-cli.py -f <inputfile> -c <found,unit,random> -s <yes,no>'
     print '-f:'
@@ -39,6 +40,7 @@ def print_help():
     sys.exit()
 
 def main(argv):
+    """The main function of the CLI interface"""
     inputfile = ''
     cost = ''
     symmetric = ''
